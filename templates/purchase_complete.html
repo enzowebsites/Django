@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Purchase Complete</h1>
+<p>Thank you for your purchase! Here are your order details:</p>
+{% for order in orders %}
+<div class="card mb-3">
+  <div class="card-body">
+    <h5>Order ID: {{ order.id }}</h5>
+    <p>Product: {{ order.product.name }}</p>
+    <p>Quantity: {{ order.quantity }}</p>
+    <p>Total: ${{ order.get_total }}</p>
+    <p>Status: {{ order.status }}</p>
+    <p>Address: {{ order.address }}</p>
+  </div>
+</div>
+{% endfor %}
+<p>Note: Since you are a guest, please note down your order IDs for reference.</p>
+{% endblock %}

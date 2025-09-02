@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<header class="bg-dark py-5">
+  <div class="container px-4 px-lg-5 my-5">
+    <div class="text-center text-white">
+      <h1 class="display-4 fw-bolder">Urban Kicks</h1>
+      <p class="lead fw-normal text-white-50 mb-0">
+        Welcome to Urban Kicks Store your one-stop destination for stylish, comfortable, and high-quality footwear.
+        Whether
+        you’re looking for everyday casual shoes, trendy sneakers, elegant heels, durable boots, or performance-driven
+        athletic wear, we’ve got something for everyone. Our collection combines fashion with function, ensuring you
+        step out with confidence in every season.
+      </p>
+    </div>
+  </div>
+</header>
+
+<section class="py-5">
+  <div class="container px-4 px-lg-5 mt-5">
+
+    {% for category in categories %}
+    <br />
+    <hr />
+    <br />
+    <h2 class="mb-4">{{ category.name }}</h2>
+    <br />
+
+    <div class="row gx-4 gy-4 row-cols-1 row-cols-md-2 row-cols-lg-4">
+      {% for product in products %}
+      {% if product.category == category %}
+      <div class="col mb-4">
+        <div class="card h-100" style="width: 18rem; margin:auto;">
+
+          {% if product.image %}
+          <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}"
+            style="height: 200px; object-fit: cover;">
+          {% else %}
+          <img src="{% static 'assets/img/placeholder.png' %}" class="card-img-top" alt="Placeholder"
+            style="height: 200px; object-fit: cover;">
+          {% endif %}
+
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title">{{ product.name }}</h5>
+            {% if product.description %}
+            <p class="card-text">{{ product.description|truncatewords:20 }}</p>
+            {% endif %}
+            <p class="card-text"><strong>₱ {{ product.price }}</strong></p>
+            <div class="mt-auto">
+              <a href="{% url 'add_to_cart' product.pk %}" class="btn btn-outline-dark">Add to cart</a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      {% endif %}
+      {% empty %}
+      <p>No products available in this category.</p>
+      {% endfor %}
+    </div>
+    {% endfor %}
+
+  </div>
+</section>
+
+{% endblock %}
